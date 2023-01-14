@@ -1,8 +1,4 @@
-try
-  colorscheme gruvbox
-catch
-  colorscheme hybrid
-endtry
+colorscheme wombat
 set shiftwidth=2                " Use indents of 4 spaces
 set tabstop=2                   " An indentation every four columns
 set softtabstop=2               " Let backspace delete indent
@@ -16,6 +12,7 @@ highlight clear LineNr          " Current line number row will have same backgro
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 highlight Comment cterm=italic
+
 
 set wrap!
 set ttyfast

@@ -153,6 +153,7 @@ let g:mucomplete#buffer_relative_paths = 1
 call plug#begin('~/.vim_runtime/plugged')
 
 Plug 'flazz/vim-colorschemes'
+Plug 'sainnhe/gruvbox-material'
 Plug 'preservim/nerdtree'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'dense-analysis/ale'
