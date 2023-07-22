@@ -142,30 +142,22 @@ let g:fzf_launcher = 'newiterm_window %s'
 let g:fzf_layout = { 'down': '~40%' }
 map <leader>j :FZF<cr>
 
-" Mucomplete
-set completeopt+=menuone
-set completeopt+=noselect
-" Enable on start-up
-let g:mucomplete#enable_auto_at_startup = 1
-" Use file path completion that is relative to the buffer
-let g:mucomplete#buffer_relative_paths = 1
-
 call plug#begin('~/.vim_runtime/plugged')
 
 Plug 'flazz/vim-colorschemes'
 Plug 'preservim/nerdtree'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'dense-analysis/ale'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'lifepillar/vim-mucomplete'
 Plug 'itchyny/lightline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'godlygeek/tabular'
-Plug 'preservim/vim-markdown'
 Plug 'leafgarland/typescript-vim'
 Plug 'evanleck/vim-svelte'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
