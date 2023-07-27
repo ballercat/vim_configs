@@ -143,12 +143,44 @@ let g:fzf_layout = { 'down': '~40%' }
 map <leader>j :FZF<cr>
 
 " Mucomplete
-set completeopt+=menuone
-set completeopt+=noselect
+" set completeopt+=menuone
+" set completeopt+=noselect
 " Enable on start-up
-let g:mucomplete#enable_auto_at_startup = 1
+" let g:mucomplete#enable_auto_at_startup = 1
 " Use file path completion that is relative to the buffer
-let g:mucomplete#buffer_relative_paths = 1
+" let g:mucomplete#buffer_relative_paths = 1
+
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
 
 call plug#begin('~/.vim_runtime/plugged')
 
@@ -157,8 +189,8 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'preservim/nerdtree'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'dense-analysis/ale'
-Plug 'junegunn/fzf.vim'
-Plug 'lifepillar/vim-mucomplete'
+Plug '~/.fzf'
+" Plug 'lifepillar/vim-mucomplete'
 Plug 'itchyny/lightline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'othree/html5.vim'
@@ -168,5 +200,6 @@ Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'leafgarland/typescript-vim'
 Plug 'evanleck/vim-svelte'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
