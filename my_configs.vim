@@ -9,6 +9,7 @@ set softtabstop=2               " Let backspace delete indent
 set number
 set foldmethod=indent
 set cc=80
+set expandtab
 " set cursorline
 
 highlight clear SignColumn      " SignColumn should match background
@@ -20,6 +21,18 @@ highlight Comment cterm=italic
 set wrap!
 set ttyfast
 set lazyredraw
+
+" remember undos
+set undofile
+if !has('nvim')
+  set undodir=~/.vimundo/
+else
+  set undodir=~/nvim/undo
+endif
+
+if has('nvim')
+  autocmd FocusGained * checktime
+endif
 
 " display special chars (eol, tab etc)
 " set invlist
@@ -38,6 +51,7 @@ nnoremap <Leader>i :exec "normal i".nr2char(getchar())."\e"<CR>
 " the best
 imap <Leader><Leader> <Esc>
 
+imap <Leader>tm :TableModeToggle<CR>
 " Allow for mouse scrolling
 set mouse=a
 
@@ -157,6 +171,9 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  map <leader>nn :NERDTreeToggle<cr>
+  map <leader>nb :NERDTreeFromBookmark
+  map <leader>nf :NERDTreeFind<cr>
   let g:NERDTreeWinPos = "left"
   map <leader>F :NERDTreeFind<cr>
   let NERDTreeShowHidden=1
@@ -170,40 +187,9 @@ endfunction
 " => Syntax checker
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:ale_javascript_eslint_use_global = 1
-let g:ale_javascript_eslint_executable = 'yarn'
-let g:ale_javascript_eslint_options = 'lint'
-
-let g:ale_sign_error = '!'
-let g:ale_sign_warning = '?'
-let g:ale_sign_column_always = 1
-" Don't use eslint if it's not available
-let g:ale_linters = { 'shell': ['shellcheck'] }
-" if !empty(glob("node_modules/eslint/bin/eslint.js"))
-  let g:ale_linters = { 'shell': ['shellcheck'], 'javascript': ['eslint'], 'typescriptreact': ['eslint'], 'typescript': ['eslint'] }
-  let g:ale_javascript_flow_use_global = 0
-" endif
-
-let g:ale_fixers = {'javascript': ['prettier'], 'markdown': ['prettier'], 'typescript': ['prettier'], 'typescriptreact': ['prettier']}
-let g:ale_fix_on_save = 1
-
-let g:ale_completion_enabled = 1
-let g:ale_completion_delay = 10
-
-if !empty(glob(".prettierc"))
-  " let g:ale_markdown_prettier_options = "--config .prettierrc"
-endif
 
 autocmd BufNewFile,BufRead *.kit set syntax=javascript
 autocmd BufNewFile,BufRead *.walt set syntax=javascript
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd BufNewFile,BufRead *.hcl set syntax=terraform
 
